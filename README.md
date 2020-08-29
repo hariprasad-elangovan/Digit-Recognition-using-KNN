@@ -1,1 +1,1 @@
-# Digit-Recognition-using-SVM
+# Digit-Recognition-using-KNN
