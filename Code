@@ -1,0 +1,64 @@
+## Digit recognition using ML
+print('welcome')
+
+
+## Import the required packages
+import numpy as np
+import cv2
+import mnist
+from sklearn.neighbors import KNeighborsClassifier   # The KNN model
+from sklearn import metrics      # To measure accuracy of the prediction
+import pickle
+print('Successfully imported all the packages...!')
+
+
+## Load the MNIST Dataset
+x_train=mnist.train_images()  #load the train image data from MNIST lib
+y_train=mnist.train_labels()  #load the train labelsdata from MNIST lib
+x_test=mnist.test_images()  #load the test image data from MNIST lib
+y_test=mnist.test_labels()  #load the test labels data from MNIST lib
+print("Loaded all the data")
+type(x_train)
+x_train.shape
+
+
+## Plot an image to see the data structure
+import matplotlib.pyplot as plt
+plt.imshow(x_train[0])
+plt.imshow(x_train[235])
+
+
+ ### This section can be used to train the model with minimal amount of data
+#x_train=x_train[0:600001:50, 0:,0: ]
+#x_train.shape
+#
+#y_train=y_train[0:600001:50]
+#y_train.shape
+
+
+##Normalization
+x_train=x_train/255    # Converting the pixelvalue from 0-255 to 0-1 that makes the computational process easier 
+x_test=x_test/255  
+
+
+##Flattening
+x_train=x_train.reshape(-1,784)    # The 28x28 pixels are now flattened to a single vector having 784 values linearly
+x_test=x_test.reshape(-1,784) 
+x_train.shape,x_test.shape         # We can notiece that 28,28 has been changed to 784
+
+
+##Training the KNN
+KNN_model= KNeighborsClassifier(n_neighbors=5)   # Create the classifier model
+
+KNN_model.fit(x_train, y_train)                  # Train the model using the training sets
+
+predicted_digit = KNN_model.predict(x_test)      # Predict the response for test dataset
+
+
+ ## Testing the Model
+print("Accuracy:",metrics.accuracy_score(y_test, predicted_digit))  
+
+
+## Save the model using Pickle
+pickle.dump(KNN_model, open('File Name', 'wb'))
+print('YOUR DIGIT RECOGNITION MODEL IS TRAINED')
