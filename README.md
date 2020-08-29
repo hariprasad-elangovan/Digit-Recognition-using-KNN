@@ -1,1 +1,1 @@
-# Digit-Recognition-using-KNN
+# Digit-Recognition-using-KNN with MNIST dataset
